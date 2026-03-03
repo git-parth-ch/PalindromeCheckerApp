@@ -1,41 +1,47 @@
 import java.util.Scanner;
-import java.util.Deque;
-import java.util.ArrayDeque;
 
 public class PalindromeApp {
 
+    // Encapsulated PalindromeChecker class
+    static class PalindromeChecker {
+
+        public boolean checkPalindrome(String input) {
+
+            if (input == null) {
+                return false;
+            }
+
+            input = input.toLowerCase();
+
+            int start = 0;
+            int end = input.length() - 1;
+
+            while (start < end) {
+
+                if (input.charAt(start) != input.charAt(end)) {
+                    return false;
+                }
+
+                start++;
+                end--;
+            }
+
+            return true;
+        }
+    }
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
+        PalindromeChecker checker = new PalindromeChecker();
 
-        System.out.println("Case-Insensitive & Space-Ignored Palindrome Checker");
-        System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        String processedInput = input.replaceAll("\\s+", "").toLowerCase();
+        boolean result = checker.checkPalindrome(input);
 
-        if (isPalindrome(processedInput)) {
-            System.out.println("Result: The given string is a Palindrome.");
-        } else {
-            System.out.println("Result: The given string is NOT a Palindrome.");
-        }
+        System.out.println("Input:" + input);
+        System.out.println("Is Palindrome : " + result);
 
         scanner.close();
-    }
-
-    private static boolean isPalindrome(String str) {
-        int start = 0;
-        int end = str.length() - 1;
-
-        while (start < end) {
-            if (str.charAt(start) != str.charAt(end)) {
-                return false;
-            }
-            start++;
-            end--;
-        }
-
-        return true;
     }
 }
