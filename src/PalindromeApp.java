@@ -1,32 +1,41 @@
+import java.util.Scanner;
+import java.util.Deque;
+import java.util.ArrayDeque;
+
 public class PalindromeApp {
+
 
     public static void main(String[] args) {
 
-        // Step 1: Define the input string
-        String text = "madam";
+        Scanner scanner = new Scanner(System.in);
 
-        // Step 2: Call recursive palindrome check
-        boolean isPalindrome = isPalindromeRecursive(text, 0, text.length() - 1);
+        System.out.println("Case-Insensitive & Space-Ignored Palindrome Checker");
+        System.out.print("Enter a string: ");
+        String input = scanner.nextLine();
 
-        // Output
-        System.out.println("Input text: " + text);
-        System.out.println("Is it a Palindrome: " + isPalindrome);
+        String processedInput = input.replaceAll("\\s+", "").toLowerCase();
+
+        if (isPalindrome(processedInput)) {
+            System.out.println("Result: The given string is a Palindrome.");
+        } else {
+            System.out.println("Result: The given string is NOT a Palindrome.");
+        }
+
+        scanner.close();
     }
 
-    // Recursive method
-    static boolean isPalindromeRecursive(String text, int start, int end) {
+    private static boolean isPalindrome(String str) {
+        int start = 0;
+        int end = str.length() - 1;
 
-        // Base condition: single character or crossed indices
-        if (start >= end) {
-            return true;
+        while (start < end) {
+            if (str.charAt(start) != str.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
         }
 
-        // Check mismatch
-        if (text.charAt(start) != text.charAt(end)) {
-            return false;
-        }
-
-        // Recursive call
-        return isPalindromeRecursive(text, start + 1, end - 1);
+        return true;
     }
 }
