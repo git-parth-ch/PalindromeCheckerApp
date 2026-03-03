@@ -1,39 +1,65 @@
 import java.util.Scanner;
+import java.util.Stack;
 
-public class PalindromeApp {
+// Strategy Interface
+interface PalindromeStrategy {
+    boolean check(String input);
+}
 
-    // Encapsulated PalindromeChecker class
-    static class PalindromeChecker {
+// Stack Strategy Implementation
+class StackStrategy implements PalindromeStrategy {
 
-        public boolean checkPalindrome(String input) {
+    public boolean check(String input) {
 
-            if (input == null) {
+        if (input == null) {
+            return false;
+        }
+
+        input = input.toLowerCase();
+
+        Stack<Character> stack = new Stack<>();
+
+        // Push all characters into stack
+        for (char c : input.toCharArray()) {
+            stack.push(c);
+        }
+
+        // Compare while popping
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
                 return false;
             }
-
-            input = input.toLowerCase();
-
-            int start = 0;
-            int end = input.length() - 1;
-
-            while (start < end) {
-
-                if (input.charAt(start) != input.charAt(end)) {
-                    return false;
-                }
-
-                start++;
-                end--;
-            }
-
-            return true;
         }
+
+        return true;
     }
+}
+
+// Context Class
+class PalindromeChecker {
+
+    private PalindromeStrategy strategy;
+
+    // Strategy injected via constructor
+    public PalindromeChecker(PalindromeStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public boolean checkPalindrome(String input) {
+        return strategy.check(input);
+    }
+}
+
+// Main Class
+public class PalindromeApp {
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        PalindromeChecker checker = new PalindromeChecker();
+
+        // Inject StackStrategy (Strategy Pattern)
+        PalindromeStrategy strategy = new StackStrategy();
+        PalindromeChecker checker = new PalindromeChecker(strategy);
 
         String input = scanner.nextLine();
 
