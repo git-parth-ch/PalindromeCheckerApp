@@ -1,36 +1,32 @@
-import java.util.LinkedList;
-
 public class PalindromeApp {
 
     public static void main(String[] args) {
 
         // Step 1: Define the input string
-        String text = "level";
+        String text = "madam";
 
-        // Step 2: Create a LinkedList to store characters
-        LinkedList<Character> list = new LinkedList<>();
-
-        // Step 3: Add each character to the linked list
-        for (char ch : text.toCharArray()) {
-            list.add(ch);
-        }
-
-        // Step 4: Flag to track palindrome state
-        boolean isPalindrome = true;
-
-        // Step 5: Compare first and last until 0 or 1 element remains
-        while (list.size() > 1) {
-            char first = list.removeFirst();
-            char last = list.removeLast();
-
-            if (first != last) {
-                isPalindrome = false;
-                break;
-            }
-        }
+        // Step 2: Call recursive palindrome check
+        boolean isPalindrome = isPalindromeRecursive(text, 0, text.length() - 1);
 
         // Output
-        System.out.println("Input: " + text);
+        System.out.println("Input text: " + text);
         System.out.println("Is it a Palindrome: " + isPalindrome);
+    }
+
+    // Recursive method
+    static boolean isPalindromeRecursive(String text, int start, int end) {
+
+        // Base condition: single character or crossed indices
+        if (start >= end) {
+            return true;
+        }
+
+        // Check mismatch
+        if (text.charAt(start) != text.charAt(end)) {
+            return false;
+        }
+
+        // Recursive call
+        return isPalindromeRecursive(text, start + 1, end - 1);
     }
 }
