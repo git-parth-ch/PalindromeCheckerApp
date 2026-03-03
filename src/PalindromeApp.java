@@ -1,3 +1,5 @@
+import java.util.Queue;
+import java.util.LinkedList;
 import java.util.Stack;
 
 public class PalindromeApp {
@@ -5,23 +7,28 @@ public class PalindromeApp {
     public static void main(String[] args) {
 
         // Hardcoded input
-        String text = "noon";
+        String text = "madam";
 
+        char[] characters = text.toCharArray();
+
+        Queue<Character> queue = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
 
-        // Push characters into stack
-        for (int i = 0; i < text.length(); i++) {
-            stack.push(text.charAt(i));
+        // Enqueue and Push characters
+        for (char ch : characters) {
+            queue.add(ch);   // Enqueue (FIFO)
+            stack.push(ch);  // Push (LIFO)
         }
 
         boolean isPalindrome = true;
 
-        // Pop and compare
-        for (int i = 0; i < text.length(); i++) {
+        // Compare dequeue vs pop
+        while (!queue.isEmpty()) {
 
-            char poppedChar = stack.pop();
+            char fromQueue = queue.remove();  // Dequeue
+            char fromStack = stack.pop();     // Pop
 
-            if (text.charAt(i) != poppedChar) {
+            if (fromQueue != fromStack) {
                 isPalindrome = false;
                 break;
             }
