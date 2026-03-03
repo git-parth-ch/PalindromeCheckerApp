@@ -1,7 +1,21 @@
-public class PalindromeApp{
-    public static void main (String[]args){
-        System.out.println("Welcome to the Palindrome Checker Management System");//Welcome Message
-        System.out.println("Version 1.0");
-        System.out.println("System Initialised successfully");
+public class PalindromeApp {
+
+    public static void main(String[] args) {
+
+        // Hardcoded string
+        String text = "madam";
+
+        // Reverse the string
+        String reversed = "";
+
+        for (int i = text.length() - 1; i >= 0; i--) {
+            reversed = reversed + text.charAt(i);
+        }
+
+        // Check if palindrome
+        boolean isPalindrome = text.equals(reversed);
+
+        System.out.println("Input text: " + text);
+        System.out.println("Is it a Palindrome: " + isPalindrome);
     }
 }
